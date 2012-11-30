@@ -71,8 +71,12 @@
           addMapOverlay(overlay);
         });
         google.maps.event.addListener(drawingManager, 'markercomplete', function(overlay) {
-          console.log(overlay.position.lng());
+          document.getElementById("lastMarker").innerHTML = overlay.position.lng() + ',' + overlay.position.lat();
+          google.maps.event.addListener(overlay, 'dragend', function() {
+            document.getElementById("lastMarker").innerHTML = overlay.position.lng() + ',' + overlay.position.lat();
+          });
         });
+       
        
       }
       
@@ -168,7 +172,8 @@
     <div id="map_canvas"> </div>
     <div id="map_io">
       <textarea id="geoJSON"></textarea>
-      <input id="loadJsonButton" type="button" value="Load GeoJSON" onclick="loadGeoJSON();">
+      <input id="loadJsonButton" type="button" value="Load GeoJSON" onclick="loadGeoJSON();"><br>
+      Last marker : <span id="lastMarker"/>
     </div>
   
 </body></html>
